@@ -45,7 +45,6 @@ const useStore = create<Store>()(
             }
             return todo;
           });
-
           return {
             ...state,
             todoList: updatedTodo,
@@ -53,10 +52,15 @@ const useStore = create<Store>()(
         }),
       toggleTodo: (id: number) =>
         set(state => {
-          const updatedTodo = state.todoList.map(todo => ({
-            ...todo,
-            isDone: todo.id === id ? !todo.isDone : todo.isDone,
-          }));
+          const updatedTodo = state.todoList.map(todo => {
+            if (todo.id === id) {
+              return {
+                ...todo,
+                isDone: !todo.isDone,
+              };
+            }
+            return todo;
+          });
           return {
             ...state,
             todoList: updatedTodo,
