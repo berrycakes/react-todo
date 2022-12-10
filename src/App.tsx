@@ -4,7 +4,7 @@ import './App.css';
 import useStore from './store';
 
 function App() {
-  const { todoList } = useStore();
+  const todoList = useStore(({ todoList }) => todoList);
   return (
     <div className="App">
       <h1>To-do App</h1>

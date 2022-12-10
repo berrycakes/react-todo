@@ -18,12 +18,13 @@ const TodoNew = () => {
       ...todoList,
       {
         // find the latest id and add 1
-        id: Math.max(...todoList.map(todo => todo.id)) + 1,
+        id: Math.max(0, Math.max(...todoList.map(({ id }) => id))) + 1,
         // 1. if you were to refactor the above code, generating the id,
         //    how would you do it? No need to change the way you
         //    generate the id
         // -- instead of using reduce, i mapped through the list to generate an array of IDs
         // and got the max number of the array using Math.max
+        // -- return 0 when array is empty
         description,
         isDone: false,
       },
