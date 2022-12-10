@@ -10,11 +10,8 @@ function App() {
       <h1>To-do App</h1>
       <div className="container">
         <TodoNew />
-        <TodoList />
-
-        <pre>
-          {JSON.stringify(todoList, null, 2)}
-        </pre>
+        <TodoList todoList={todoList} />
+        <pre>{JSON.stringify(todoList, null, 2)}</pre>
       </div>
     </div>
   );

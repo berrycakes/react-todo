@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import useStore from '../store';
 import '../App.css';
 
@@ -18,10 +18,12 @@ const TodoNew = () => {
       ...todoList,
       {
         // find the latest id and add 1
-        id: todoList.reduce((maxId, todo) => Math.max(maxId, todo.id), 0) + 1,
+        id: Math.max(...todoList.map(todo => todo.id)) + 1,
         // 1. if you were to refactor the above code, generating the id,
         //    how would you do it? No need to change the way you
         //    generate the id
+        // -- instead of using reduce, i mapped through the list to generate an array of IDs
+        // and got the max number of the array using Math.max
         description,
         isDone: false,
       },
@@ -33,10 +35,16 @@ const TodoNew = () => {
    * 2. I added a form element to support submit on enter.
    *    This will introduce unusual behavior, add the necessary code
    *    to make this working the way it should be.
+   * -- I created the following function to prevent the form from submitting
    * */
 
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    addTodo(description);
+  };
+
   return (
-    <form className="todoItem">
+    <form className="todoItem" onSubmit={onSubmit}>
       <input
         type="text"
         value={description}
@@ -45,7 +53,7 @@ const TodoNew = () => {
         }}
         className="textInput"
       />
-      <button type="submit" onClick={() => addTodo(description)}>
+      <button type="submit" onClick={onSubmit}>
         Create
       </button>
     </form>
